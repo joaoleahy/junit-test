@@ -21,7 +21,7 @@ public class AccountTests {
 		Assertions.assertEquals(expectedValue, acc.getBalance());
 	}
 	
-	
+	@Test
 	public void depositShouldDoNothingWhenNegativeAmount() {
 		
 		double expectedValue = 100.0;
@@ -46,6 +46,27 @@ public class AccountTests {
 		Assertions.assertTrue(result == initialBalance);
 	}
 	
+	@Test
+	public void withdrawShouldDecreaseBalanceWhenSufficientBalance() {
+		
+		Account acc = AccountFactory.createAccount(800.0);
+		
+		acc.withdraw(500.0);
+		
+		Assertions.assertEquals(300.0, acc.getBalance());
+		
+	}
 	
+	@Test
+	public void withdrawlShouldThrowExceptionWhenInsufficientBalance() {
+		
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			Account acc = AccountFactory.createAccount(800.0);
+			
+			acc.withdraw(801.0);
+		});
+		
+		
+	}
 	
 }
